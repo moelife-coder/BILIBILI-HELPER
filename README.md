@@ -79,7 +79,7 @@ BILIBILI-HELPER
 2. **获取 Bilibili Cookies**
 - 浏览器打开并登录 [bilibili 网站](https://www.bilibili.com/)
 - 按 F12 打开 「开发者工具」 找到 应用程序/Application -> 存储 -> Cookies
-- 找到 `bili_jct` `SESSDATA` `DEDEUSERID` 三项，并复制值，创建对应的 GitHub Secrets。
+- 找到 `bili_jct` `SESSDATA` `DedeUserID` 三项，并复制值，创建对应的 GitHub Secrets。
 
 ![图示](docs/IMG/20201012001307.png)
 
@@ -99,7 +99,7 @@ BILIBILI-HELPER
 
 ![图示](docs/IMG/workflow_dispatch.png)
 
-**Fork 仓库后，GitHub 默认不自动执行 Actions 任务，请修改 `./github/trigger.json` 文件,将 `trigger` 的值改为 `1`，这样每天就会自动执行定时任务了。**
+**Fork 仓库后，GitHub 默认不自动执行 Actions 任务，请修改 `.github/trigger.json` 文件,将 `trigger` 的值改为 `1`，这样每天就会自动执行定时任务了。**
 
 ```patch
 {
