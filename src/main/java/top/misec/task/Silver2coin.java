@@ -7,7 +7,7 @@ import top.misec.apiquery.ApiList;
 import top.misec.apiquery.oftenAPI;
 import top.misec.utils.HttpUtil;
 
-import static top.misec.task.TaskInfoHolder.statusCodeStr;
+import static top.misec.task.TaskInfoHolder.STATUS_CODE_STR;
 import static top.misec.task.TaskInfoHolder.userInfo;
 
 /**
@@ -21,13 +21,11 @@ public class Silver2coin implements Task {
 
     static Logger logger = (Logger) LogManager.getLogger(Silver2coin.class.getName());
 
-    private final String taskName = "银瓜子换硬币";
-
     @Override
     public void run() {
 
         JsonObject resultJson = HttpUtil.doGet(ApiList.silver2coin);
-        int responseCode = resultJson.get(statusCodeStr).getAsInt();
+        int responseCode = resultJson.get(STATUS_CODE_STR).getAsInt();
         if (responseCode == 0) {
             logger.info("银瓜子兑换硬币成功");
         } else {
@@ -42,11 +40,13 @@ public class Silver2coin implements Task {
         /*
         兑换银瓜子后，更新userInfo中的硬币值
          */
-        userInfo.setMoney(silver2coinMoney);
+        if (userInfo != null) {
+            userInfo.setMoney(silver2coinMoney);
+        }
     }
 
     @Override
     public String getName() {
-        return taskName;
+        return "银瓜子换硬币";
     }
 }

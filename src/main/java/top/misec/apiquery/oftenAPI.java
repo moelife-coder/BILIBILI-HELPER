@@ -3,8 +3,11 @@ package top.misec.apiquery;
 import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import top.misec.config.Config;
 import top.misec.login.Verify;
 import top.misec.utils.HttpUtil;
+
+import java.util.Collections;
 
 /**
  * 部分API简单封装。
@@ -69,14 +72,25 @@ public class oftenAPI {
         if (jsonObject.get("code").getAsInt() == 0) {
             title = jsonObject.getAsJsonObject("data").getAsJsonObject("owner").get("name").getAsString() + ": ";
             title += jsonObject.getAsJsonObject("data").get("title").getAsString();
-            title.replace("&", "-");
         } else {
             title = "未能获取标题";
             logger.info(title);
             logger.debug(jsonObject.get("message").getAsString());
         }
 
-        return title;
+        return title.replace("&", "-");
+    }
+
+    public static String queryUserName(String uid) {
+        String urlParameter = "?mid=" + uid + "&jsonp=jsonp";
+        String userName = "1";
+        JsonObject jsonObject = HttpUtil.doGet(ApiList.queryUserName + urlParameter);
+        if (jsonObject.get("code").getAsInt() == 0) {
+            userName = jsonObject.getAsJsonObject("data").get("name").getAsString();
+        } else {
+            logger.info("查询充电对象的用户名失败,充电对象已置为你本人" + jsonObject);
+        }
+        return userName;
     }
 
 
